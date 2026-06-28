@@ -1,0 +1,280 @@
+/* ========================================
+   珂珂的信 - 样式表
+   自然温暖风格
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f7f0e6;
+    background-image:
+        radial-gradient(ellipse at 20% 80%, rgba(210, 180, 140, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(205, 170, 130, 0.3) 0%, transparent 50%);
+    font-family: 'Georgia', 'Noto Serif SC', 'STSong', serif;
+    overflow: hidden;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* 信封容器 */
+.envelope-container {
+    position: relative;
+    z-index: 1;
+    perspective: 1000px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 信封 */
+.envelope {
+    width: 90vw;
+    height: 65vh;
+    max-width: 480px;
+    max-height: 340px;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease;
+}
+
+.envelope.opened {
+    transform: rotateX(180deg);
+}
+
+.envelope-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #faf8f5;
+    border: 1px solid rgba(180, 150, 120, 0.3);
+    box-shadow: 0 8px 40px rgba(139, 90, 43, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.envelope:active .envelope-front {
+    transform: scale(0.98);
+}
+
+.envelope-title {
+    font-size: clamp(22px, 6vw, 32px);
+    color: #6b4423;
+    font-weight: normal;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.envelope-subtitle {
+    font-size: clamp(13px, 3.5vw, 16px);
+    color: #8b7355;
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+}
+
+.envelope-hint {
+    font-size: clamp(11px, 2.8vw, 13px);
+    color: #a89880;
+    margin-top: clamp(20px, 5vw, 35px);
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.1em;
+}
+
+/* 信封封口 */
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 45%;
+    background: linear-gradient(180deg, #e8ddd0 0%, #ddd0c0 100%);
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    transform-origin: top;
+    transition: transform 0.5s ease;
+    z-index: 2;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.envelope.opened .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+/* 信纸 */
+.letter {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fdfcf9;
+    background-image:
+        repeating-linear-gradient(
+            transparent,
+            transparent 31px,
+            rgba(200, 180, 150, 0.15) 31px,
+            rgba(200, 180, 150, 0.15) 32px
+        );
+    padding: clamp(100px, 25vh, 180px) clamp(30px, 10vw, 80px);
+    padding-bottom: clamp(120px, 25vh, 200px);
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    z-index: 50;
+    pointer-events: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.letter::-webkit-scrollbar {
+    display: none;
+}
+
+.letter.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 信纸内容 */
+.letter-header {
+    text-align: left;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(180, 150, 120, 0.2);
+}
+
+.letter-date {
+    font-size: 12px;
+    color: #a89880;
+    margin-bottom: 15px;
+    letter-spacing: 0.1em;
+}
+
+.letter-greeting {
+    font-size: clamp(18px, 5vw, 24px);
+    color: #6b4423;
+    font-weight: normal;
+}
+
+.letter-content {
+    font-size: clamp(15px, 4vw, 16px);
+    line-height: 2;
+    color: #4a4a4a;
+    text-indent: 2em;
+}
+
+.letter-content p {
+    margin-bottom: 1.2em;
+    text-align: justify;
+}
+
+.letter-signature {
+    text-align: right;
+    margin-top: 50px;
+    padding-top: 20px;
+}
+
+.letter-signature .name {
+    font-size: clamp(16px, 4.5vw, 20px);
+    color: #6b4423;
+}
+
+.letter-signature .date {
+    font-size: 12px;
+    color: #a89880;
+    margin-top: 8px;
+}
+
+/* 提示文字 */
+.click-hint {
+    position: fixed;
+    bottom: calc(clamp(24px, 6vh, 50px) + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    color: #8b7355;
+    font-size: clamp(13px, 3.5vw, 15px);
+    z-index: 10;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+}
+
+/* 重新封装按钮 */
+.reset-btn {
+    position: fixed;
+    bottom: calc(clamp(24px, 6vh, 50px) + env(safe-area-inset-bottom, 0px));
+    right: clamp(20px, 5vw, 40px);
+    background: transparent;
+    color: #8b7355;
+    border: 1px solid rgba(139, 115, 85, 0.4);
+    padding: 10px 20px;
+    font-size: clamp(13px, 3vw, 15px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 100;
+    display: none;
+    font-family: inherit;
+    letter-spacing: 0.05em;
+}
+
+.reset-btn:active {
+    background: rgba(139, 115, 85, 0.1);
+}
+
+.reset-btn.show {
+    display: block;
+}
+
+/* iOS特定优化 */
+@supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
+
+    .letter {
+        padding-top: calc(clamp(50px, 12vh, 80px) + env(safe-area-inset-top, 0px));
+        padding-bottom: calc(clamp(60px, 12vh, 100px) + env(safe-area-inset-bottom, 0px));
+    }
+}
+
+/* 小屏适配 */
+@media screen and (max-width: 375px) {
+    .letter-content {
+        font-size: 14px;
+        line-height: 1.9;
+    }
+}
+
+/* 横屏适配 */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    body {
+        align-items: flex-start;
+        padding-top: 10px;
+    }
+
+    .letter {
+        padding: 40px 20px;
+    }
+}
