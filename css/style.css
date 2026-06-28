@@ -21,7 +21,7 @@ body {
         radial-gradient(ellipse at 20% 80%, rgba(210, 180, 140, 0.4) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 20%, rgba(205, 170, 130, 0.3) 0%, transparent 50%);
     font-family: 'Georgia', 'Noto Serif SC', 'STSong', serif;
-    overflow: hidden;
+    overflow: auto;
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
@@ -122,8 +122,7 @@ body {
 /* 信纸 */
 .letter {
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     background: #fdfcf9;
@@ -134,8 +133,7 @@ body {
             rgba(200, 180, 150, 0.15) 31px,
             rgba(200, 180, 150, 0.15) 32px
         );
-    padding: clamp(100px, 25vh, 180px) clamp(30px, 10vw, 80px);
-    padding-bottom: clamp(120px, 25vh, 200px);
+    padding: 0 clamp(30px, 10vw, 80px);
     transform: translateY(100%);
     opacity: 0;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -226,17 +224,18 @@ body {
     position: fixed;
     bottom: calc(clamp(24px, 6vh, 50px) + env(safe-area-inset-bottom, 0px));
     right: clamp(20px, 5vw, 40px);
-    background: transparent;
+    background: #fdfcf9;
     color: #8b7355;
     border: 1px solid rgba(139, 115, 85, 0.4);
     padding: 10px 20px;
     font-size: clamp(13px, 3vw, 15px);
     cursor: pointer;
     transition: all 0.3s ease;
-    z-index: 100;
+    z-index: 999;
     display: none;
     font-family: inherit;
     letter-spacing: 0.05em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .reset-btn:active {
@@ -277,4 +276,157 @@ body {
     .letter {
         padding: 40px 20px;
     }
+}
+
+/* ========================================
+   回信区域
+   ======================================== */
+.reply-section {
+    margin-top: 60px;
+    padding-bottom: 100px;
+}
+
+.reply-divider {
+    width: 60px;
+    height: 1px;
+    background: rgba(180, 150, 120, 0.3);
+    margin: 0 auto 30px;
+}
+
+.reply-hint {
+    text-align: center;
+    font-size: clamp(13px, 3.5vw, 15px);
+    color: #a89880;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+/* 小信封 */
+.reply-envelope {
+    width: 120px;
+    margin: 0 auto 20px;
+    cursor: pointer;
+    display: none;
+}
+
+.reply-envelope.show {
+    display: block;
+}
+
+.reply-envelope-front {
+    background: #faf8f5;
+    border: 1px solid rgba(180, 150, 120, 0.3);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.reply-envelope:active .reply-envelope-front {
+    transform: scale(0.97);
+}
+
+.reply-envelope-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.reply-envelope-text {
+    font-size: 11px;
+    color: #8b7355;
+}
+
+/* 编辑器 */
+.reply-editor {
+    display: none;
+    margin-bottom: 20px;
+}
+
+.reply-editor.show {
+    display: block;
+}
+
+.reply-editor textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    border: 1px solid rgba(180, 150, 120, 0.3);
+    background: #fdfcf9;
+    font-family: 'Georgia', 'Noto Serif SC', 'STSong', serif;
+    font-size: clamp(14px, 3.5vw, 15px);
+    line-height: 1.8;
+    color: #4a4a4a;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.reply-editor textarea:focus {
+    border-color: rgba(139, 115, 85, 0.5);
+}
+
+.reply-editor textarea::placeholder {
+    color: #c4b8a8;
+    font-style: italic;
+}
+
+.reply-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    justify-content: flex-end;
+}
+
+.reply-btn {
+    padding: 8px 20px;
+    font-size: clamp(13px, 3vw, 14px);
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.05em;
+    transition: all 0.2s ease;
+}
+
+.reply-save {
+    background: #6b4423;
+    color: white;
+    border: none;
+}
+
+.reply-save:active {
+    background: #5a3a1d;
+}
+
+.reply-cancel {
+    background: transparent;
+    color: #8b7355;
+    border: 1px solid rgba(139, 115, 85, 0.4);
+}
+
+.reply-cancel:active {
+    background: rgba(139, 115, 85, 0.1);
+}
+
+/* 写回信按钮 */
+.reply-write-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 24px;
+    background: #fdfcf9;
+    border: 1px solid rgba(139, 115, 85, 0.4);
+    color: #8b7355;
+    font-size: clamp(13px, 3vw, 14px);
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.05em;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    bottom: 20px;
+}
+
+.reply-write-btn:active {
+    background: rgba(139, 115, 85, 0.1);
+}
+
+.reply-write-btn.hidden {
+    display: none;
 }
